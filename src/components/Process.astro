@@ -1,0 +1,130 @@
+---
+const steps = [
+  {
+    num: '01',
+    time: 'В день обращения',
+    title: 'Бесплатная консультация',
+    text: 'Вы пишете в WhatsApp / звоните / заполняете форму. Я отвечаю в течение часа в рабочее время. Обсуждаем ситуацию, я говорю — какие шансы и какой план действий.',
+  },
+  {
+    num: '02',
+    time: '1–2 дня',
+    title: 'Договор и оплата',
+    text: 'Подписываем соглашение об оказании юридической помощи (письменно, по закону). Фиксируем сумму и сроки. Оплата частями допустима — обсуждаем индивидуально.',
+  },
+  {
+    num: '03',
+    time: 'Активная фаза',
+    title: 'Сбор доказательств и подача',
+    text: 'Запрашиваю документы, готовлю иск/жалобу/ходатайство. Беру на себя коммуникацию со следствием, приставами, страховой, оппонентом. Вы получаете отчёт каждый этап.',
+  },
+  {
+    num: '04',
+    time: 'До результата',
+    title: 'Суд и сопровождение',
+    text: 'Хожу на заседания сам — без помощников. Готовлю позицию к каждому слушанию. После решения — слежу за исполнением: пристав, банк, оппонент.',
+  },
+];
+---
+
+<section id="process" class="process">
+  <div class="container-x">
+    <div class="process__head">
+      <span class="sec-tag reveal">Как я&nbsp;работаю</span>
+      <h2 class="display-h reveal">
+        От&nbsp;первого звонка до&nbsp;решения&nbsp;—<br />
+        <em>четыре шага</em> без сюрпризов.
+      </h2>
+    </div>
+
+    <ol class="process__list">
+      {steps.map((s, i) => (
+        <li class="step reveal">
+          <div class="step__rail">
+            <div class="step__num font-display">{s.num}</div>
+            {i < steps.length - 1 && <div class="step__line"></div>}
+          </div>
+          <div class="step__body">
+            <div class="step__time font-mono">{s.time}</div>
+            <h3 class="step__title">{s.title}</h3>
+            <p class="step__text">{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .process { padding: 120px 0; background: var(--color-bg-2); }
+  .process__head { max-width: 820px; margin-bottom: 72px; }
+
+  .process__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: 820px;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 24px;
+    padding-bottom: 36px;
+  }
+  .step:last-child { padding-bottom: 0; }
+
+  .step__rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .step__num {
+    font-size: 32px;
+    color: var(--color-gold-deep);
+    line-height: 1;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border-2);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .step__line {
+    flex: 1;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--color-border-2), transparent);
+    margin-top: 12px;
+    min-height: 40px;
+  }
+
+  .step__body { padding-top: 6px; }
+  .step__time {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-gold-deep);
+    margin-bottom: 8px;
+  }
+  .step__title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 26px;
+    margin: 0 0 12px;
+    color: var(--color-text);
+  }
+  .step__text {
+    margin: 0;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--color-text-soft);
+    max-width: 600px;
+  }
+
+  @media (min-width: 640px) {
+    .step { grid-template-columns: 100px 1fr; gap: 32px; }
+    .step__num { width: 72px; height: 72px; font-size: 36px; }
+  }
+</style>

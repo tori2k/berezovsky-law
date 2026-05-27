@@ -1,0 +1,169 @@
+---
+const facts = [
+  { label: 'Реестровый номер', value: '34/1410' },
+  { label: 'Адвокатская палата', value: 'Волгоградская область' },
+  { label: 'Стаж в профессии', value: 'С 2005 года' },
+  { label: 'Регион практики', value: 'Москва и Московская область' },
+];
+
+const principles = [
+  {
+    title: 'Адвокатская тайна',
+    text: 'Любая информация, переданная мне на консультации, защищена законом. Я не имею права разглашать её даже под угрозой уголовного преследования.',
+  },
+  {
+    title: 'Реалистичная оценка',
+    text: 'Я не обещаю того, чего не могу гарантировать. На первой консультации честно говорю о шансах и о рисках — даже если выгоднее взяться за безнадёжное дело.',
+  },
+  {
+    title: 'Личное ведение',
+    text: 'Я не передаю ваше дело помощникам. На суд, к следователю и в кабинет к приставу прихожу сам. Вы платите за моё имя и за мой опыт.',
+  },
+];
+---
+
+<section id="about" class="about">
+  <div class="container-x about__inner">
+    <div class="about__head">
+      <span class="sec-tag reveal">Об&nbsp;адвокате</span>
+      <h2 class="display-h reveal">
+        Адвокат с&nbsp;<em>20-летним</em> стажем.
+        <br />Защищаю там, где&nbsp;цена ошибки&nbsp;— годы.
+      </h2>
+    </div>
+
+    <div class="about__grid">
+      <div class="about__copy reveal-left">
+        <p class="about__lead">
+          Я&nbsp;член Адвокатской палаты Волгоградской области с&nbsp;2005&nbsp;года.
+          Практикую в&nbsp;Москве и&nbsp;Московской области. За&nbsp;двадцать лет провёл
+          сотни уголовных, гражданских и&nbsp;арбитражных дел.
+        </p>
+        <p>
+          Беру не&nbsp;всё подряд: только&nbsp;то, где могу довести дело до&nbsp;результата.
+          Если на&nbsp;первой консультации пойму, что выиграть нельзя&nbsp;— скажу
+          прямо. Это сэкономит ваши деньги и&nbsp;нервы.
+        </p>
+        <p>
+          На&nbsp;площадке 9111.ru&nbsp;— <b>1993&nbsp;отзыва</b> и&nbsp;средняя оценка
+          <b>4.9&nbsp;из&nbsp;5</b>. Не&nbsp;потому что я&nbsp;ловкий продавец.
+          А&nbsp;потому что отвечаю в&nbsp;течение часа, а&nbsp;на&nbsp;консультации
+          говорю по&nbsp;делу.
+        </p>
+
+        <dl class="about__facts">
+          {facts.map((f) => (
+            <div class="about__fact">
+              <dt>{f.label}</dt>
+              <dd>{f.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      <div class="about__principles reveal-right">
+        {principles.map((p) => (
+          <article class="about__principle">
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about { padding: 100px 0; background: var(--color-bg-2); position: relative; }
+  .about::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(11,20,36,0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(11,20,36,0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+    pointer-events: none;
+  }
+  .about__inner { position: relative; }
+  .about__head { max-width: 820px; margin-bottom: 64px; }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+
+  .about__copy p {
+    font-size: 17px;
+    color: var(--color-text-soft);
+    margin: 0 0 18px;
+    max-width: 560px;
+  }
+  .about__lead {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 22px !important;
+    line-height: 1.45;
+    color: var(--color-text) !important;
+    margin-bottom: 24px !important;
+  }
+  .about__copy b { color: var(--color-text); font-weight: 600; }
+
+  .about__facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 32px;
+    margin: 36px 0 0;
+    padding: 28px 0 0;
+    border-top: 1px solid var(--color-border);
+    max-width: 560px;
+  }
+  .about__fact dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 6px;
+  }
+  .about__fact dd {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .about__principles {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .about__principle {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-gold);
+    padding: 24px 28px;
+    border-radius: 4px;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .about__principle:hover {
+    transform: translateX(4px);
+    border-left-color: var(--color-accent);
+  }
+  .about__principle h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 22px;
+    margin: 0 0 10px;
+    color: var(--color-text);
+  }
+  .about__principle p {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--color-text-soft);
+    line-height: 1.6;
+  }
+
+  @media (min-width: 960px) {
+    .about__grid { grid-template-columns: 1fr 1fr; gap: 80px; }
+  }
+</style>

@@ -1,0 +1,141 @@
+---
+const year = new Date().getFullYear();
+const links = [
+  { href: '#about',    label: 'Об адвокате' },
+  { href: '#services', label: 'Услуги' },
+  { href: '#process',  label: 'Как работаю' },
+  { href: '#cases',    label: 'Кейсы' },
+  { href: '#faq',      label: 'Вопросы' },
+  { href: '#contact',  label: 'Связь' },
+];
+---
+
+<footer class="footer">
+  <div class="container-x footer__inner">
+    <div class="footer__brand">
+      <span class="footer__mark font-mono">АБ</span>
+      <div>
+        <div class="footer__name font-display">Адвокат Александр Михайлович Березовский</div>
+        <div class="footer__sub">Адвокатская палата Волгоградской области · реестровый № 34/1410</div>
+      </div>
+    </div>
+
+    <nav class="footer__links">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <div class="footer__meta">
+      <div class="footer__contacts">
+        <a href="tel:+79033150952">+7 (903) 315-09-52</a>
+        <span>·</span>
+        <a href="mailto:berezovsky.law@yandex.ru">berezovsky.law@yandex.ru</a>
+      </div>
+      <div class="footer__legal">
+        © {year} Александр Михайлович Березовский. Информация на&nbsp;сайте
+        не&nbsp;является публичной офертой.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-accent-dark);
+    color: rgba(247, 244, 238, 0.7);
+    padding: 56px 0 40px;
+    font-size: 13.5px;
+  }
+  .footer__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .footer__brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .footer__mark {
+    width: 42px; height: 42px;
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    background: var(--color-gold);
+    color: var(--color-accent-dark);
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+  .footer__name {
+    color: #f7f4ee;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .footer__sub {
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 1px;
+    color: rgba(247, 244, 238, 0.5);
+    text-transform: uppercase;
+  }
+
+  .footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 24px;
+  }
+  .footer__links a {
+    color: rgba(247, 244, 238, 0.7);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer__links a:hover { color: var(--color-gold); }
+
+  .footer__meta {
+    padding-top: 28px;
+    border-top: 1px solid rgba(247, 244, 238, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .footer__contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+  .footer__contacts a {
+    color: #f7f4ee;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer__contacts a:hover { color: var(--color-gold); }
+  .footer__contacts span { color: rgba(247, 244, 238, 0.3); }
+
+  .footer__legal {
+    font-size: 12px;
+    color: rgba(247, 244, 238, 0.5);
+    line-height: 1.6;
+  }
+
+  @media (min-width: 880px) {
+    .footer__inner {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "brand links"
+        "meta meta";
+      gap: 40px 64px;
+    }
+    .footer__brand { grid-area: brand; }
+    .footer__links { grid-area: links; justify-content: flex-end; align-items: center; }
+    .footer__meta {
+      grid-area: meta;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+</style>

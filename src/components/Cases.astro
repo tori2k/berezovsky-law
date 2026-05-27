@@ -1,0 +1,139 @@
+---
+const cases = [
+  {
+    tag: 'ОСАГО',
+    result: '+ 412 000 ₽',
+    title: 'Страховая выплатила в 4 раза больше',
+    text: 'Клиенту после ДТП насчитали 135 000 ₽ по ОСАГО. Независимая экспертиза показала ущерб 547 000 ₽. Через суд взыскали разницу + штраф 50%, неустойку и расходы на эксперта.',
+    meta: 'Срок: 4 месяца · Подсудность: Москва',
+  },
+  {
+    tag: 'Уголовное',
+    result: 'ст. 264 ч. 1',
+    title: 'Переквалификация с тяжкого на средний',
+    text: 'Доверитель — водитель, виновник ДТП с тяжкими телесными. Доказали отсутствие признаков ч. 3 ст. 264. Итог: условный срок вместо реального и сохранение водительских прав после погашения судимости.',
+    meta: 'Срок: 8 месяцев · Подсудность: Мособлсуд',
+  },
+  {
+    tag: 'Приставы',
+    result: '— арест',
+    title: 'Сняли арест с единственного жилья',
+    text: 'ФССП наложила арест на квартиру по долгу 380 000 ₽ — единственное жильё доверителя. Жалоба руководителю отдела + заявление в суд. Арест снят за 11 дней, продажу остановили.',
+    meta: 'Срок: 11 дней · Подсудность: район Москвы',
+  },
+  {
+    tag: 'Семейное',
+    result: '50/50',
+    title: 'Раздел бизнес-доли при разводе',
+    text: 'Супруга требовала 100% доли в ООО, оформленной на доверителя. Доказали, что часть была получена в дар от родителей. Итог: 50% доли осталось у доверителя без компенсации.',
+    meta: 'Срок: 6 месяцев · Подсудность: Москва',
+  },
+];
+---
+
+<section id="cases" class="cases">
+  <div class="container-x">
+    <div class="cases__head">
+      <span class="sec-tag reveal">Кейсы</span>
+      <h2 class="display-h reveal">
+        Четыре дела,<br /> которые показывают <em>как я&nbsp;работаю</em>.
+      </h2>
+      <p class="cases__lead reveal">
+        Без имён и&nbsp;деталей, которые могут идентифицировать доверителей&nbsp;— это
+        прямое требование адвокатской тайны. Все цифры и&nbsp;результаты&nbsp;— реальные.
+      </p>
+    </div>
+
+    <div class="cases__grid">
+      {cases.map((c) => (
+        <article class="case reveal">
+          <div class="case__top">
+            <span class="case__tag font-mono">{c.tag}</span>
+            <span class="case__result font-display">{c.result}</span>
+          </div>
+          <h3 class="case__title font-display">{c.title}</h3>
+          <p class="case__text">{c.text}</p>
+          <div class="case__meta font-mono">{c.meta}</div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cases { padding: 120px 0; background: var(--color-bg); }
+  .cases__head { max-width: 840px; margin-bottom: 64px; }
+  .cases__lead {
+    margin: 22px 0 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-muted);
+    max-width: 640px;
+    font-style: italic;
+  }
+
+  .cases__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .case {
+    background: var(--color-bg-2);
+    border: 1px solid var(--color-border);
+    padding: 32px 28px;
+    border-radius: 6px;
+    transition: transform 0.4s, box-shadow 0.4s;
+  }
+  .case:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(11,20,36,0.07);
+  }
+
+  .case__top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .case__tag {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    padding: 6px 10px;
+    background: rgba(30, 58, 95, 0.07);
+    border-radius: 3px;
+  }
+  .case__result {
+    font-size: 26px;
+    color: var(--color-gold-deep);
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .case__title {
+    font-size: 22px;
+    margin: 0 0 14px;
+    color: var(--color-text);
+    line-height: 1.25;
+  }
+  .case__text {
+    margin: 0 0 18px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--color-text-soft);
+  }
+  .case__meta {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 760px) { .cases__grid { grid-template-columns: 1fr 1fr; } }
+</style>

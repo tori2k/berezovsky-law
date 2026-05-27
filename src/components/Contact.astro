@@ -1,0 +1,260 @@
+---
+const channels = [
+  {
+    label: 'Телефон',
+    value: '+7 (903) 315-09-52',
+    href: 'tel:+79033150952',
+    note: 'WhatsApp · Telegram · звонок',
+  },
+  {
+    label: 'Электронная почта',
+    value: 'berezovsky.law@yandex.ru',
+    href: 'mailto:berezovsky.law@yandex.ru',
+    note: 'Отвечаю в течение дня',
+  },
+  {
+    label: 'Профиль 9111.ru',
+    value: '1993 отзыва · 4.9 ★',
+    href: 'https://www.9111.ru/',
+    note: 'Открытый рейтинг и отзывы',
+  },
+];
+---
+
+<section id="contact" class="contact">
+  <div class="container-x contact__inner">
+    <div class="contact__bg" aria-hidden="true"></div>
+
+    <div class="contact__left reveal-left">
+      <span class="sec-tag" style="color: var(--color-gold);">Связь</span>
+      <h2 class="display-h" style="color: #f7f4ee;">
+        Первая консультация&nbsp;— <em>бесплатно</em>.<br />
+        Без обязательств.
+      </h2>
+      <p class="contact__lead">
+        Напишите мне в&nbsp;WhatsApp, позвоните или заполните форму справа.
+        Отвечаю в&nbsp;течение часа в&nbsp;рабочее время. Расскажу&nbsp;—
+        какие шансы и&nbsp;что я&nbsp;сделаю.
+      </p>
+
+      <div class="contact__channels">
+        {channels.map((c) => (
+          <a class="channel" href={c.href} target={c.href.startsWith('http') ? '_blank' : null} rel={c.href.startsWith('http') ? 'noopener noreferrer' : null}>
+            <div class="channel__label font-mono">{c.label}</div>
+            <div class="channel__value font-display">{c.value}</div>
+            <div class="channel__note">{c.note}</div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <form class="contact__form reveal-right" id="contactForm" novalidate>
+      <h3 class="form__title font-display">Оставить заявку</h3>
+      <p class="form__sub">Расскажите коротко — я&nbsp;перезвоню в&nbsp;течение часа.</p>
+
+      <div class="form__row">
+        <label class="form__field">
+          <span>Имя</span>
+          <input type="text" name="name" required autocomplete="name" placeholder="Как к вам обращаться?" />
+        </label>
+        <label class="form__field">
+          <span>Телефон</span>
+          <input type="tel" name="phone" required autocomplete="tel" placeholder="+7 (___) ___-__-__" />
+        </label>
+      </div>
+
+      <label class="form__field">
+        <span>Кратко суть вопроса</span>
+        <textarea name="message" rows="4" placeholder="Например: ОСАГО, занижена выплата на 200 тыс."></textarea>
+      </label>
+
+      <label class="form__consent">
+        <input type="checkbox" name="consent" required checked />
+        <span>Согласен на&nbsp;обработку персональных данных по&nbsp;<a href="#">политике конфиденциальности</a></span>
+      </label>
+
+      <button type="submit" class="btn btn--gold form__submit">
+        Получить консультацию
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M13 5l7 7-7 7"/>
+        </svg>
+      </button>
+
+      <p class="form__hint">
+        Нажимая кнопку, вы&nbsp;соглашаетесь с&nbsp;условиями обработки данных.
+        Информация защищена адвокатской тайной.
+      </p>
+    </form>
+  </div>
+
+  <script is:inline>
+    const form = document.getElementById('contactForm');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+        const name = data.get('name') || '';
+        const phone = data.get('phone') || '';
+        const message = data.get('message') || '';
+        const text = `Здравствуйте, Александр Михайлович! Я — ${name}, телефон ${phone}. Вопрос: ${message}`;
+        const url = 'https://wa.me/79033150952?text=' + encodeURIComponent(text);
+        window.open(url, '_blank');
+      });
+    }
+  </script>
+</section>
+
+<style>
+  .contact {
+    padding: 120px 0;
+    background: var(--color-accent);
+    color: #f7f4ee;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(184, 146, 63, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(184, 146, 63, 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+    pointer-events: none;
+  }
+  .contact__inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .contact__left { max-width: 560px; }
+  .contact__lead {
+    margin: 24px 0 36px;
+    font-size: 17px;
+    line-height: 1.65;
+    color: rgba(247, 244, 238, 0.78);
+  }
+
+  .contact__channels {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .channel {
+    display: block;
+    padding: 18px 22px;
+    background: rgba(247, 244, 238, 0.05);
+    border: 1px solid rgba(247, 244, 238, 0.12);
+    border-radius: 4px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+  }
+  .channel:hover {
+    background: rgba(247, 244, 238, 0.10);
+    border-color: var(--color-gold);
+    transform: translateX(4px);
+  }
+  .channel__label {
+    font-size: 10.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: 6px;
+  }
+  .channel__value {
+    font-size: 22px;
+    font-weight: 500;
+    color: #f7f4ee;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .channel__note {
+    font-size: 12.5px;
+    color: rgba(247, 244, 238, 0.6);
+  }
+
+  .contact__form {
+    background: var(--color-bg);
+    color: var(--color-text);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+  }
+  .form__title {
+    font-size: 30px;
+    margin: 0 0 6px;
+    color: var(--color-text);
+  }
+  .form__sub {
+    margin: 0 0 28px;
+    font-size: 14.5px;
+    color: var(--color-muted);
+  }
+  .form__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .form__field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+  .form__field span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 8px;
+  }
+  .form__field input, .form__field textarea {
+    padding: 12px 14px;
+    border: 1px solid var(--color-border-2);
+    border-radius: 4px;
+    background: var(--color-bg-2);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: var(--color-text);
+    transition: border-color 0.25s, background 0.25s;
+  }
+  .form__field input:focus, .form__field textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    background: #fff;
+  }
+  .form__field textarea { resize: vertical; min-height: 96px; }
+
+  .form__consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 8px 0 24px;
+    font-size: 12.5px;
+    color: var(--color-text-soft);
+    line-height: 1.5;
+    cursor: pointer;
+  }
+  .form__consent input { margin-top: 3px; flex-shrink: 0; }
+  .form__consent a { color: var(--color-accent); }
+
+  .form__submit { width: 100%; padding: 16px; font-size: 14px; }
+  .form__hint {
+    margin: 18px 0 0;
+    font-size: 11.5px;
+    color: var(--color-muted);
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  @media (min-width: 720px) {
+    .form__row { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 1024px) {
+    .contact__inner { grid-template-columns: 1fr 480px; gap: 80px; }
+  }
+</style>

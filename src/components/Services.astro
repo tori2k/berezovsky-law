@@ -1,0 +1,157 @@
+---
+const services = [
+  {
+    num: '01',
+    title: 'Уголовные дела',
+    items: ['Защита на следствии и в суде', 'Кражи, мошенничество, наркотики', 'ДТП с пострадавшими', 'Сопровождение допросов'],
+    note: 'Беру с момента задержания. Выезд к&nbsp;следователю в&nbsp;течение 2&nbsp;часов.',
+  },
+  {
+    num: '02',
+    title: 'Споры с приставами',
+    items: ['Снятие ареста с имущества', 'Обжалование действий ФССП', 'Возврат списанных денег', 'Защита единственного жилья'],
+    note: 'Часто получается вернуть списанное за&nbsp;3–7&nbsp;рабочих дней.',
+  },
+  {
+    num: '03',
+    title: 'Страховые споры',
+    items: ['ОСАГО — занижение выплат', 'КАСКО — отказ в страховке', 'Возмещение по жизни и здоровью', 'Споры с РСА'],
+    note: 'Работаю по&nbsp;ФЗ&nbsp;№40 и&nbsp;закону «О&nbsp;защите прав потребителей».',
+  },
+  {
+    num: '04',
+    title: 'Семейные споры',
+    items: ['Раздел имущества', 'Алименты — взыскание и снижение', 'Установление отцовства', 'Лишение родительских прав'],
+    note: 'Стараюсь решить миром. Если не&nbsp;получается&nbsp;— иду в&nbsp;суд.',
+  },
+  {
+    num: '05',
+    title: 'Жилищные споры',
+    items: ['Выселение и вселение', 'Наследство на недвижимость', 'Перепланировка — узаконивание', 'Соседи и общедомовое имущество'],
+    note: 'Работаю с&nbsp;Росреестром, БТИ и&nbsp;управляющими компаниями.',
+  },
+  {
+    num: '06',
+    title: 'Защита потребителей',
+    items: ['Возврат денег за товар/услугу', 'Споры с застройщиками', 'Возврат банковских комиссий', 'Споры с интернет-магазинами'],
+    note: 'Чаще всего удаётся вернуть всю сумму + штраф 50%.',
+  },
+];
+---
+
+<section id="services" class="services">
+  <div class="container-x">
+    <div class="services__head">
+      <span class="sec-tag reveal">Практика</span>
+      <h2 class="display-h reveal">
+        Шесть направлений,<br /> в&nbsp;которых я&nbsp;<em>работаю каждый день</em>.
+      </h2>
+      <p class="services__lead reveal">
+        Не&nbsp;обещаю «всё подряд». Беру&nbsp;то, в&nbsp;чём действительно сильный.
+        Если ваш вопрос вне&nbsp;списка&nbsp;— честно скажу на&nbsp;первой консультации
+        и&nbsp;при необходимости порекомендую коллегу.
+      </p>
+    </div>
+
+    <div class="services__grid">
+      {services.map((s) => (
+        <article class="service reveal">
+          <div class="service__num font-mono">{s.num}</div>
+          <h3 class="service__title font-display">{s.title}</h3>
+          <ul class="service__list">
+            {s.items.map((it) => (
+              <li>{it}</li>
+            ))}
+          </ul>
+          <p class="service__note" set:html={s.note}></p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services { padding: 120px 0; background: var(--color-bg); }
+  .services__head { max-width: 880px; margin-bottom: 72px; }
+  .services__lead {
+    margin: 24px 0 0;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--color-text-soft);
+    max-width: 680px;
+  }
+
+  .services__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .service {
+    background: var(--color-bg-2);
+    border: 1px solid var(--color-border);
+    padding: 36px 32px;
+    border-radius: 6px;
+    position: relative;
+    transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s;
+  }
+  .service::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--color-gold);
+    transition: width 0.5s cubic-bezier(.22,1,.36,1);
+  }
+  .service:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-border-2);
+    box-shadow: 0 18px 40px rgba(11,20,36,0.06);
+  }
+  .service:hover::before { width: 100%; }
+
+  .service__num {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--color-gold-deep);
+    margin-bottom: 14px;
+  }
+  .service__title {
+    font-size: 26px;
+    margin: 0 0 22px;
+    color: var(--color-text);
+  }
+  .service__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .service__list li {
+    font-size: 14.5px;
+    color: var(--color-text-soft);
+    padding-left: 18px;
+    position: relative;
+  }
+  .service__list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 1px;
+    background: var(--color-gold);
+  }
+  .service__note {
+    margin: 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--color-muted);
+    line-height: 1.55;
+  }
+
+  @media (min-width: 700px)  { .services__grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .services__grid { grid-template-columns: repeat(3, 1fr); } }
+</style>
