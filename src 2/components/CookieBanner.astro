@@ -1,0 +1,102 @@
+---
+// Cookie consent — соответствие 152-ФЗ
+---
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" hidden>
+  <div class="cookie-banner__inner">
+    <div class="cookie-banner__text">
+      <strong>Мы используем cookies и&nbsp;«Яндекс.Метрику»</strong>
+      <span>
+        Для аналитики посещаемости и&nbsp;улучшения сайта.
+        Подробнее в&nbsp;<a href="/privacy/">Политике конфиденциальности</a>.
+      </span>
+    </div>
+    <div class="cookie-banner__actions">
+      <button class="cookie-banner__btn cookie-banner__btn--ghost" id="cookieDecline" type="button">
+        Отклонить
+      </button>
+      <button class="cookie-banner__btn cookie-banner__btn--accept" id="cookieAccept" type="button">
+        Принять
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const KEY = 'bt-cookie-consent';
+    const banner = document.getElementById('cookieBanner');
+    if (!banner) return;
+    const existing = localStorage.getItem(KEY);
+    if (!existing) {
+      setTimeout(function () {
+        banner.hidden = false;
+        requestAnimationFrame(function () { banner.classList.add('cookie-banner--shown'); });
+      }, 700);
+    } else if (existing === 'accepted') {
+      if (typeof window.btLoadMetrika === 'function') window.btLoadMetrika();
+    }
+    function setConsent(value) {
+      try { localStorage.setItem(KEY, value); } catch (e) {}
+      const expiry = new Date();
+      expiry.setFullYear(expiry.getFullYear() + 1);
+      document.cookie = KEY + '=' + value + '; path=/; expires=' + expiry.toUTCString() + '; SameSite=Lax';
+      banner.classList.remove('cookie-banner--shown');
+      setTimeout(function () { banner.hidden = true; }, 350);
+      if (value === 'accepted' && typeof window.btLoadMetrika === 'function') {
+        window.btLoadMetrika();
+      }
+    }
+    document.getElementById('cookieAccept').addEventListener('click', function () { setConsent('accepted'); });
+    document.getElementById('cookieDecline').addEventListener('click', function () { setConsent('declined'); });
+  })();
+</script>
+
+<style>
+  .cookie-banner {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+    background: #0b1424; color: #f7f4ee; padding: 18px 24px;
+    border-top: 2px solid #b8923f;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.35);
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(.22, 1, .36, 1);
+  }
+  .cookie-banner--shown { transform: translateY(0); }
+  .cookie-banner__inner {
+    max-width: 1240px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 14px;
+    align-items: flex-start;
+  }
+  .cookie-banner__text {
+    display: flex; flex-direction: column; gap: 4px;
+    font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.5;
+  }
+  .cookie-banner__text strong { font-weight: 600; letter-spacing: -0.005em; }
+  .cookie-banner__text span { color: rgba(247, 244, 238, 0.75); font-size: 13px; }
+  .cookie-banner__text a { color: #d4a957; text-decoration: underline; text-underline-offset: 2px; }
+  .cookie-banner__actions { display: flex; gap: 10px; flex-shrink: 0; }
+  .cookie-banner__btn {
+    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.3px; padding: 11px 22px;
+    border-radius: 4px; border: none; cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .cookie-banner__btn--accept { background: #b8923f; color: #0b1424; }
+  .cookie-banner__btn--accept:hover { background: #d4a957; transform: translateY(-1px); }
+  .cookie-banner__btn--ghost {
+    background: transparent; color: #f7f4ee;
+    border: 1px solid rgba(247, 244, 238, 0.3);
+  }
+  .cookie-banner__btn--ghost:hover {
+    background: rgba(247, 244, 238, 0.08);
+    border-color: rgba(247, 244, 238, 0.5);
+  }
+  @media (min-width: 720px) {
+    .cookie-banner__inner { flex-direction: row; align-items: center; gap: 24px; }
+    .cookie-banner__text { flex: 1; flex-direction: row; align-items: center; gap: 14px; }
+  }
+  @media (max-width: 480px) {
+    .cookie-banner { padding: 14px 16px; }
+    .cookie-banner__actions { width: 100%; }
+    .cookie-banner__btn { flex: 1; padding: 11px 14px; font-size: 12.5px; }
+  }
+</style>

@@ -1,0 +1,169 @@
+---
+const base = import.meta.env.BASE_URL;
+const HOME = base.endsWith('/') ? base : `${base}/`;
+
+const links = [
+  { href: '#about',    label: 'Об адвокате' },
+  { href: '#services', label: 'Услуги' },
+  { href: '#process',  label: 'Как работаю' },
+  { href: '#cases',    label: 'Кейсы' },
+  { href: '#faq',      label: 'Вопросы' },
+];
+---
+<header class="nav">
+  <div class="container-x nav__inner">
+    <a href={HOME} class="nav__brand" aria-label="На главную">
+      <span class="nav__brand-mark">АБ</span>
+      <span class="nav__brand-text">
+        <span class="nav__brand-name font-display">Адвокат Березовский</span>
+        <span class="nav__brand-sub">Москва · 20+ лет практики</span>
+      </span>
+    </a>
+
+    <nav class="nav__links">
+      {links.map((l) => (
+        <a href={l.href} class="nav__link">{l.label}</a>
+      ))}
+    </nav>
+
+    <a href="#contact" class="btn btn--primary nav__cta">
+      Консультация
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M5 12h14M13 5l7 7-7 7"/>
+      </svg>
+    </a>
+
+    <button class="nav__burger" id="navBurger" aria-label="Меню" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="nav__mobile" id="navMobile" hidden>
+    {links.map((l) => (
+      <a href={l.href} class="nav__mobile-link">{l.label}</a>
+    ))}
+    <a href="#contact" class="btn btn--primary nav__mobile-cta">Консультация</a>
+  </div>
+</header>
+
+<script is:inline>
+  const burger = document.getElementById('navBurger');
+  const mobile = document.getElementById('navMobile');
+  if (burger && mobile) {
+    burger.addEventListener('click', () => {
+      const opened = burger.classList.toggle('is-open');
+      mobile.hidden = !opened;
+      burger.setAttribute('aria-expanded', String(opened));
+    });
+    mobile.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
+      burger.classList.remove('is-open');
+      mobile.hidden = true;
+    }));
+  }
+</script>
+
+<style>
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(247, 244, 238, 0.85);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .nav__inner {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px;
+    padding-top: 16px; padding-bottom: 16px;
+  }
+  .nav__brand { display: flex; align-items: center; gap: 12px; color: var(--color-text); }
+  .nav__brand-mark {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 42px; height: 42px;
+    background: var(--color-accent);
+    color: #f7f4ee;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 4px;
+  }
+  .nav__brand-text { display: flex; flex-direction: column; line-height: 1.05; }
+  .nav__brand-name {
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+  }
+  .nav__brand-sub {
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--color-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .nav__links { display: none; gap: 32px; }
+  .nav__link {
+    font-size: 14px;
+    color: var(--color-text-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav__link::after {
+    content: '';
+    position: absolute; left: 0; right: 100%;
+    bottom: -4px;
+    height: 1px;
+    background: var(--color-gold);
+    transition: right 0.3s cubic-bezier(.22, 1, .36, 1);
+  }
+  .nav__link:hover { color: var(--color-accent); }
+  .nav__link:hover::after { right: 0; }
+
+  .nav__cta { padding: 11px 22px; font-size: 13px; }
+
+  .nav__burger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 32px;
+    background: none;
+    border: 0;
+    padding: 8px;
+    cursor: pointer;
+  }
+  .nav__burger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--color-text);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .nav__burger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav__burger.is-open span:nth-child(2) { opacity: 0; }
+  .nav__burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav__mobile {
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 16px 24px 24px;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+  .nav__mobile-link {
+    padding: 10px 0;
+    font-size: 16px;
+    color: var(--color-text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .nav__mobile-cta { margin-top: 16px; justify-content: center; }
+
+  @media (min-width: 880px) {
+    .nav__links { display: flex; }
+    .nav__burger, .nav__mobile { display: none !important; }
+  }
+  @media (max-width: 879px) {
+    .nav__cta { display: none; }
+    .nav__brand-sub { display: none; }
+  }
+</style>

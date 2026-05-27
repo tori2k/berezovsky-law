@@ -1,0 +1,110 @@
+---
+import '../styles/global.css';
+import CookieBanner from '../components/CookieBanner.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Адвокат Александр Березовский — Москва. Защита по уголовным делам, споры с приставами, страховые споры.',
+  description = 'Опытный адвокат с 20-летним стажем. Адвокатская палата Волгоградской области № 34/1410. 1993 отзыва на 9111.ru. Уголовные дела, ОСАГО/КАСКО, жилищные и семейные споры.',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+const ymCounterId = import.meta.env.PUBLIC_YM_COUNTER_ID || '';
+const ymCounterIdNumber = Number(ymCounterId);
+const ymCode = Number.isFinite(ymCounterIdNumber) && ymCounterIdNumber > 0
+  ? `
+        window.btLoadMetrika = function () {
+          if (window.__btMetrikaLoaded) return;
+          window.__btMetrikaLoaded = true;
+          (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+          (window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=${ymCounterIdNumber}", "ym");
+
+          ym(${ymCounterIdNumber}, "init", {
+            ssr: true,
+            webvisor: true,
+            clickmap: true,
+            ecommerce: "dataLayer",
+            referrer: document.referrer,
+            url: location.href,
+            accurateTrackBounce: true,
+            trackLinks: true
+          });
+        };
+        try {
+          if (localStorage.getItem('bt-cookie-consent') === 'accepted') {
+            window.btLoadMetrika();
+          }
+        } catch (e) {}
+      `
+  : '';
+---
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#1e3a5f" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:locale" content="ru_RU" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+
+  {/* Schema.org для адвоката — повышает SEO */}
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Attorney",
+    "name": "Адвокат Березовский Александр Михайлович",
+    "description": "Адвокат в Москве. 20 лет практики. Уголовные дела, споры с приставами, ОСАГО/КАСКО, семейные и жилищные споры.",
+    "url": "https://tori2k.github.io/berezovsky-law/",
+    "telephone": "+7 (903) 315-09-52",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Москва",
+      "addressCountry": "RU"
+    },
+    "areaServed": "Москва и Московская область",
+    "memberOf": {
+      "@type": "Organization",
+      "name": "Адвокатская палата Волгоградской области"
+    }
+  })}></script>
+
+  {ymCode && <script type="text/javascript" is:inline set:html={ymCode}></script>}
+</head>
+<body>
+  <slot />
+  <CookieBanner />
+
+  <script>
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>
