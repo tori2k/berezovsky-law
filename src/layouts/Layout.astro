@@ -12,7 +12,8 @@ const {
   description = 'Опытный адвокат с 20-летним стажем. Адвокатская палата Волгоградской области № 34/1410. 1993 отзыва на 9111.ru. Уголовные дела, ОСАГО/КАСКО, жилищные и семейные споры.',
 } = Astro.props;
 
-const base = import.meta.env.BASE_URL;
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 const ymCounterId = import.meta.env.PUBLIC_YM_COUNTER_ID || '';
 const ymCounterIdNumber = Number(ymCounterId);
 const ymCode = Number.isFinite(ymCounterIdNumber) && ymCounterIdNumber > 0
